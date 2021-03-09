@@ -19,7 +19,8 @@ module.exports = {
     resolve: {
         alias: {
             "@": path.join(__dirname, "node_modules/openmct"),
-            "openmct": path.join(__dirname, "node_modules/openmct/dist/openmct.js")
+            "openmct": path.join(__dirname, "node_modules/openmct/dist/openmct.js"),
+            "vue": path.join(__dirname, "node_modules/vue/dist/vue.js")
         }
     },
     plugins: [
