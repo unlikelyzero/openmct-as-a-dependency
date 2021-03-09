@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -21,13 +23,43 @@ module.exports = {
         }
     },
     plugins: [
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[name].css'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: 'node_modules/openmct/src/images/favicons',
+                to: 'favicons'
+            },
+            {
+                from: 'dist/index.html',
+                transform: function (content) {
+                    return content.toString().replace(/dist\//g, '');
+                }
+            }
+        ])
     ],
     module: {
         rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader'
+            },
+            // this will apply to both plain `.css` files
+            // AND `<style>` blocks in `.vue` files
+            {
+                test: /\.css$/,
+                use: [
+                  'vue-style-loader',
+                  'css-loader'
+                ]
+            },
             {
                 test: /\.(sc|sa|c)ss$/,
                 use: [
@@ -59,7 +91,7 @@ module.exports = {
                         }
                     }
                 }
-            },
+            }
         ]
     },
     devServer: {
