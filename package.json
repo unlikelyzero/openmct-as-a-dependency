@@ -1,0 +1,27 @@
+{
+  "name": "openmct-as-a-dependency",
+  "version": "1.0.0",
+  "description": "Open MCT As A dependency",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve"
+  },
+  "author": "deeptailor",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "fast-sass-loader": "1.4.6",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "http-server": "^0.12.3",
+    "mini-css-extract-plugin": "^1.3.9",
+    "node-sass": "^4.14.1",
+    "openmct": "^1.6.1",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
