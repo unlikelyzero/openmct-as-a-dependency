@@ -23,6 +23,7 @@ There are two ways to specify OpenMCT in your build process:
 ```json
 "dependencies": {
     "openmct": "stable",
+```
 If you want to use a specific version, you can do it like this:
 
 ```json
