@@ -1,0 +1,27 @@
+name: Nightly Build and Test
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs at 00:00 UTC every day
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory:
+          - git-submodule
+          - npm-dependency
+          - peer-dependency
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+    - name: Install dependencies and run tests
+      run: |
+        cd ${{ matrix.directory }}
+        npm install
+        npm run build
+        npm test
