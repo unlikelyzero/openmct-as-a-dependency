@@ -62,9 +62,15 @@ Useful for working with a specific version of OpenMCT, including forks with cust
 
 ### 3. TODO NPM Peer Dependency
 
-If you are creating a plugin which is designed to sit alongside openmct, you should use the peer dependency model. The [/peer-dependency](./peer-dependency) directory demonstrates this approach. For a comprehensive example, see:
+If you are creating an openmct plugin which is designed to sit alongside openmct, you should use the peer dependency model. The [/peer-dependency](./peer-dependency) directory demonstrates this approach. For a comprehensive example, see:
 
 - [openmct-yamcs](https://github.com/akhenry/openmct-yamcs)
+
+```mermaid
+graph TD;
+    parent-openmct --> openmct;
+    parent-openmct --> example-openmct-plugin;
+```
 
 ## Testing
 
