@@ -68,9 +68,10 @@ If you are creating an openmct plugin which is designed to sit alongside openmct
 
 ```mermaid
 graph TD;
-    parent-openmct --> openmct;
-    parent-openmct --> example-openmct-plugin;
-```
+    parent-openmct -- extends --> openmct;
+    parent-openmct -- extends --> openmct-example-plugin;
+    openmct-example-plugin -- extends --> openmct;
+...
 
 ## Testing
 
