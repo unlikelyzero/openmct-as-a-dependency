@@ -1,55 +1,91 @@
+
 # OpenMCT as a Dependency
 
-This repository serves as an example to guide users on how to build, develop, and test Open MCT when it's used as a dependency.
+This repository serves as a guide for using Open MCT as a dependency in your projects. It demonstrates how to build, develop, and test Open MCT in various scenarios.
 
-Please refer to the following showcases for a comprehensive understanding:
+**Note:** This guide is not intended for Open MCT beginners. Newcomers should start with the [Open MCT Tutorials](https://github.com/nasa/openmct-tutorial) to learn the basics through step-by-step instructions and common use cases.
 
-- [openmct-yamcs](https://github.com/akhenry/openmct-yamcs)
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Integration Methods](#integration-methods)
+  - [Node Module Dependency](#1-node-module-dependency)
+  - [Git Submodule](#2-git-submodule)
+  - [Peer Dependency](#3-peer-dependency)
+- [Testing](#testing)
+  - [Unit Tests](#unit-tests)
+  - [End-to-End (e2e) Tests](#end-to-end-e2e-tests)
+
+
+## Getting Started
+
+- **Development Guide:** For a detailed development guide, refer to [Developing Applications with Open MCT](https://github.com/nasa/openmct/blob/master/API.md#developing-applications-with-open-mct).
+
+## Integration Methods
+
+This project showcases three methods to integrate OpenMCT into your build process, tailored to different development requirements:
+
+### 1. Node Module Dependency
+
+Ideal for scenarios where you wish to use OpenMCT as-is. The [/npm-dependency](./npm-dependency) directory contains an example setup.
+
+- **Using npm:** Source OpenMCT from [npm](https://www.npmjs.com/package/openmct) with the `@stable` npm tag:
+
+```json
+"dependencies": {
+    "openmct": "stable"
+}
+```
+
+- **Specifying a Version:** To use a specific version of OpenMCT, adjust the dependency as follows:
+
+```json
+"dependencies": {
+    "openmct": "^2.2.5"
+}
+```
+
+- **Building from Source (Not Recommended):** This approach is suitable for using recent, untested builds or specific pre-production versions:
+
+```json
+"dependencies": {
+    "openmct": "nasa/openmct#master"
+}
+```
+For a comprehensive example, see: 
 - [openmct-mcws](https://github.com/NASA-AMMOS/openmct-mcws)
 
-Please note, this is not the starting point for newcomers! To familiarize yourself with Open MCT, refer to the [Open MCT Tutorials](https://github.com/nasa/openmct-tutorial). These tutorials provide step-by-step instructions to help you get started and also address common developer use cases.
 
-## Development
+### 2. TODO Git Submodule
 
-A comprehensive development guide is available [here](https://github.com/nasa/openmct/blob/master/API.md#developing-applications-with-open-mct).
+Useful for working with a specific version of OpenMCT, including forks with custom modifications. The [/git-submodule](./git-submodule) directory provides an example of this method.
 
-## Building
+### 3. TODO NPM Peer Dependency
 
-There are two ways to specify OpenMCT in your build process:
+If you are creating an openmct plugin which is designed to sit alongside openmct, you should use the peer dependency model. The [/peer-dependency](./peer-dependency) directory demonstrates this approach. For a comprehensive example, see:
 
-1. Node package hosted on npm:
-   This method is ideal if you do not plan to make any changes to the core OpenMCT project or if you are satisfied with using older/stable builds. Specify it in your package.json as follows:
-   
-```json
-"dependencies": {
-    "openmct": "stable",
-```
-If you want to use a specific version, you can do it like this:
+- [openmct-yamcs](https://github.com/akhenry/openmct-yamcs)
 
-```json
-"dependencies": {
-    "openmct": "^2.2.5",
-```
-GitHub repo alias:
-This method is suitable if you plan on using recent builds of OpenMCT or if you want to use pre-production versions.
-
-```json
-"dependencies": {
-    "openmct": "nasa/openmct#master",
-```
+```mermaid
+graph TD;
+    parent-openmct -- extends --> openmct;
+    parent-openmct -- extends --> openmct-example-plugin;
+    openmct-example-plugin -- extends --> openmct;
+...
 
 ## Testing
-There are two approaches to testing with Open MCT as a dependency: unit tests and e2e (end-to-end) tests.
 
-In both cases, it's essential to gather the devDependencies from the OpenMCT project to run the tests. Implement this with a build step to be executed just before your tests are run:
+There are two primary approaches to testing when using Open MCT as a dependency: unit tests and end-to-end (e2e) tests. Before running tests, ensure to gather the `devDependencies` from the OpenMCT project with a build step:
 
 ```json
 "build:example": "npm install openmct@unstable --no-save",
 "build:example:master": "npm install nasa/openmct#master --no-save",
 ```
 
-### Unit Tests as a Dependency
-Open MCT unit tests are designed to be run with Karma and Jasmine.
+### Unit Tests
 
-### e2e Tests as a Dependency
-In addition to our unit test pattern, we also have an established e2e test-as-a-dependency model. It is widely used in both open-source and closed-source repositories. For a good open-source example, please refer to [openmct-yamcs](https://github.com/akhenry/openmct-yamcs/blob/master/tests/README.md)
+As of 2024, the Karma and Jasmine frameworks used for Open MCT unit tests are deprecated. 
+
+### End-to-End (e2e) Tests
+
+Open MCT supports an e2e test-as-a-dependency model, widely used across both open-source and proprietary projects. For an example, refer to [openmct-yamcs](https://github.com/akhenry/openmct-yamcs/blob/master/tests/README.md).
